@@ -4,24 +4,28 @@
   <meta charset="utf-8" />
   <title>ASCII Art Viewer</title>
   <style>
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
       background: #111;
       color: #eee;
-      margin:0;
+    }
+
+    body {
       padding: 20px;
       display: flex;
       justify-content: center;
       align-items: flex-start;
       min-height: 100vh;
     }
+
     .ascii {
       font-family: Menlo, Consolas, "Courier New", monospace;
-      font-size: 12px;
-      line-height: 1em;         /* default line-height */
+      font-size: 14px;
+      line-height: 10px;         
       white-space: pre;
       display: inline-block;
-      transform-origin: top left;
-      transform: scaleY(0.55);  /* adjust 0.50–0.60 if stretched */
+      margin: 0;
     }
   </style>
 </head>
