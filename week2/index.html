@@ -25,10 +25,25 @@
             border-bottom: 2px solid black;
             padding-bottom: 8px;
         }
+        nav ul li:last-child {
+            border-bottom: none;
+        }
         nav ul li a {
             text-decoration: none;
             color: black;
             text-transform: uppercase;
+        }
+
+        @media (min-wdidth: 768px) {
+            nav ul {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+            }
+            nav ul li {
+                border-bottom: none;
+                margin: 10px;
+            } 
         }
     </style>
 </head>
@@ -47,7 +62,7 @@
 
     </main>
     <footer>
-        <p>© 2024 Fei Yang</p>
+        <p>© 2025 Fei Yang</p>
     </footer>
 </body>
 </html>
