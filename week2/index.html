@@ -13,6 +13,16 @@
         footer {
             background-color: rgb(228, 204, 240);
         }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 300;
+            color:blueviolet;
+        }
+
         nav ul {
             margin-top: 0;
             margin-bottom: 0;
@@ -29,6 +39,24 @@
         .active  {
             font-weight: bold;
 
+        }
+
+        .cursive {
+            font-style: italic;
+        }
+
+        #addContent {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+            color:rgb(44, 64, 159)
+        }
+
+        #paragraphLast {
+            max-width: 600px;
+            margin: 20px auto 0 auto;
+            text-align: left;
+            color:rgb(87, 12, 130)
         }
 
         nav ul li:last-child {
@@ -58,7 +86,7 @@
     <header>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li class="cursive"><a href="index.html">Home</a></li>
                 <li class="active"><a href="about.html">Blog</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
@@ -66,7 +94,9 @@
         </na>
     </header>
     <main>
-
+        <h1>Responsive Navigation Example</h1>
+        <p id="addContent">This is a simple example of a responsive navigation bar using HTML and CSS. Resize the browser window to see how the navigation adapts to different screen sizes.</p>
+        <p id="paragraphLast">On smaller screens, the navigation items are stacked vertically, while on larger screens </p>
     </main>
     <footer>
     </footer>
