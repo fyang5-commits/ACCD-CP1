@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #fff;
+            color: #000;
+        }
+
+        header,
+        footer {
+            background-color: transparent;
+            text-align: center;
+            padding: 10px;
+        }
+
+        main {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align:left;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin: 0 0 12px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 300;
+            color:rgb(0, 0, 0);
+            margin: 0 0 12px;
+        }
+
+        #addContent, 
+        #paragraphLast {
+            font-size: 18px;
+            line-height: 1.6;
+            color:rgb(16, 16, 16);
+            margin: 0 0 12px;
+            text-align: left;
+            max-width: 600px;
+        }
+
+        .hero {
+            height: 300px;
+            background-image: url('https://s28164.pcdn.co/files/capybara-1920x1080-2024-600x400.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 6px;
+            margin: 20px auto;   
+        }
+
+        .section {
+            text-align: left;
+            }
+        .section ul {
+            padding-left: 20px;
+        }
+
+        nav ul {
+            margin: 0;
+            padding: 20px;
+            list-style: none;
+            text-align: center;
+        }
+
+        nav ul li {
+            margin: 10px auto;
+            border-bottom: 2px solid black;
+            padding-bottom: 8px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: black;
+            text-transform: uppercase;
+        }
+
+        .active  {
+            font-weight: bold;
+        }
+
+        .cursive {
+            font-style: italic;
+        }
+
+        @media (min-width: 768px) {
+            nav ul {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                background-color: rgb(209, 158, 235);
+            }
+            nav ul li {
+                border-bottom: none;
+                margin: 10px;
+                padding-bottom: 0;
+            } 
+            body {
+                background-color: rgb(203, 186, 233);
+            }
+            .hero {
+                height: 360px;
+                background-image: url('https://a-z-animals.com/media/2023/09/shutterstock-1547421017-huge-licensed-scaled.jpg');
+            }
+            }
+
+        @media (min-width:1024px) {
+            a {
+                color: white;
+            }
+            a:hover,
+            a:focus {
+                color: #cccccc;
+            }
+        
+            nav ul {
+                background-color: rgb(247, 247, 247);
+            }
+            Body {
+                background-color: rgb(4, 4, 4);
+                color: rgb(242, 242, 242)
+            }
+            main {
+                color: rgb(242, 242, 242)
+            }
+
+             h1, h2, h3, h4, h5, h6, 
+             #paragraphLast, 
+             #addContent {
+             font-weight: 300;
+             color:rgb(242, 242, 242);
+             text-align: left;
+            }
+
+            .hero {
+                background-image: url('https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/15898774/capybara-1599766_1920.0.0.1473626820.jpg?quality=90&strip=all&crop=0%2C0%2C100%2C100&w=1440');
+                background-size: cover;
+            }
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="cursive"><a href="index.html">Home</a></li>
+                <li class="active"><a href="about.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>👋 Hi, I’m Fei!</h1>
+        <p id="addContent">I’m a designer learning to code. It still feels a bit outside my comfort zone, 
+           but I’m here to practice, get curious, and bring ideas to life. </p>
+        <p id="paragraphLast">I also run a small Etsy shop and love plants and my dog. My favorite animal is Capybara. </p>
+        <div class="hero">
+        </div>
+
+        <div class="section">
+          <h2>🌱 What I’m Working On</h2>
+        <a href="https://fyang5-commits.github.io/ACCD-CP1/week1/">My GitHub profile</a>
+        </div>
+
+        <div class="section">
+          <h2>🎨 A Bit of My Creative Side</h2>
+          <ul>
+            <li><a href="https://www.linkedin.com/in/fei-yang-product-designer/">LinkedIn</a></li>
+            <li><a href="https://www.feiyangdesign.com/about">My Website</a></li>
+            <li><a href="https://cactusboho.etsy.com">My Etsy Shop</a></li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>📺 Cozy Rain Camp on YouTube</h2>
+          <p>I also make cozy videos about relax, rain and Campfire.</p>
+          <a href="https://www.youtube.com/@cozyriancamp">My YouTube channel</a>
+        </div>
+
+        <div class="section">
+          <h2>✨ Let’s Learn Together</h2>
+          <p>Excited to build, break, and improve with everyone here!</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Fei Yang</p>
+    </footer>
+</body>
+</html>
