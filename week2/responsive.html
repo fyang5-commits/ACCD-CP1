@@ -39,16 +39,23 @@
         }
 
         .hero-image {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
+            z-index: 0;
         }
 
-        .hero::after {
-            content: "";
+        .hero-overlay {
             position: absolute;
-            inset: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
             background: rgba(0, 0, 0, 0.45);
             z-index: 1;
             pointer-events: none;
@@ -62,21 +69,68 @@
             z-index: 2;
             color: white;
             text-align: center;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 1.5rem;
-            border-radius: 10px;
+            background-color: transparent;
+            padding: 1.25rem 1.5rem;
+            border-radius: 12px;
             max-width: 600px;
         }
 
         .hero-text h1 {
             font-size: 2rem;
-            margin-bottom: 0 0 0.5rem;
+            margin: 0 0 0.5rem;
         }
 
         .hero-text p {
-            font-size: 1 rem;
+            font-size: 1rem;
             margin: 0.5rem 0;
             line-height: 1.4;
+        }
+
+        .work-banner {
+            position: relative;
+            width: 100%;
+            height: 35vh;
+            background: rgb(209, 158, 235);
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color:#fff;
+            margin: 0;
+        }
+        .work-banenr-content {
+            max-width: 720px;
+            padding: 1.5rem;
+        }
+        .work-banenr-content h2 {
+            font-size: 2rem;
+            margin: 0 0 1rem;
+        }
+        .work-banenr-content a {
+            display: inline-block;
+            padding: 0.6rem 1.1rem;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 24px;
+            max-width: 960px;
+            padding: 0 20px;
+        }
+
+        .grid-2 > .section {
+            max-width: 100%;
+            margin: 0;
+            padding: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.12);
+            border-radius: 12px;
         }
 
         .section {
@@ -114,8 +168,15 @@
         .cursive {
             font-style: italic;
         }
+        
 
         @media (min-width: 768px) {
+            .work-banner {
+                background-color:#3320c0;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr 1fr;
+            }
             nav ul {
                 display: flex;
                 flex-direction: row;
@@ -138,8 +199,12 @@
     
 
         @media (min-width:1024px) {
+            .work-banenr-content {
+                color:#000
+            }
+
             a {
-                color: white;
+                color: rgb(16, 15, 15);
             }
             a:hover,
             a:focus {
@@ -147,26 +212,14 @@
             }
         
             nav ul {
-                background-color: rgb(247, 247, 247);
+                background-color: rgb(23, 20, 20);
             }
-            Body {
+            body {
                 background-color: rgb(4, 4, 4);
                 color: rgb(242, 242, 242)
             }
             main {
                 color: rgb(242, 242, 242)
-            }
-
-             h1, h2, h3, h4, h5, h6, 
-             #paragraphLast, 
-             #addContent {
-             font-weight: 300;
-             color:rgb(242, 242, 242);
-             text-align: left;
-            }
-
-            .hero {
-                background-size: cover;
             }
         }
     </style>
@@ -182,22 +235,29 @@
         </nav>
     </header>
 
-    <main>
        <section class="hero">
-        <img src="https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/15898774/capybara-1599766_1920.0.0.1473626820.jpg?quality=90&strip=all&crop=0%2C0%2C100%2C100&w=1440" alt="Capybara" class="hero-image">
+        <img src="https://images.unsplash.com/photo-1550537687-c91072c4792d?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Patten" class="hero-image">
+
+        <div class="hero-overlay" aria-hidden="true"></div>
+
         <div class="hero-text">
          <h1>👋 Hi, I’m Fei!</h1>
          <p>I’m a designer learning to code. It still feels a bit outside my comfort zone, 
            but I’m here to practice, get curious, and bring ideas to life. </p>
-         <p>I also run a small Etsy shop and love plants and my dog. My favorite animal is Capybara. </p>
+         <p>I also run a small Etsy shop and love plants and my dog.</p>
         </div>
         </section> 
 
-        <div class="section">
-          <h2>🌱 What I’m Working On</h2>
-        <a href="https://fyang5-commits.github.io/ACCD-CP1/week1/">My GitHub profile</a>
-        </div>
 
+        <section class="work-banner">
+         <div class="work-banner-content">   
+          <h2>What I’m Working On</h2>
+          <a href="https://fyang5-commits.github.io/ACCD-CP1/week1/">My GitHub profile</a>
+         </div>
+        </section>
+
+    <main>
+        <section class="grid-2">
         <div class="section">
           <h2>🎨 A Bit of My Creative Side</h2>
           <ul>
@@ -212,6 +272,7 @@
           <p>I also make cozy videos about relax, rain and Campfire.</p>
           <a href="https://www.youtube.com/@cozyriancamp">My YouTube channel</a>
         </div>
+        </section>
 
         <div class="section">
           <h2>✨ Let’s Learn Together</h2>
