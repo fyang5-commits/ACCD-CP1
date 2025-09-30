@@ -31,34 +31,60 @@
             margin: 0 0 12px;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 300;
-            color:rgb(0, 0, 0);
-            margin: 0 0 12px;
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            overflow: hidden;
         }
 
-        #addContent, 
-        #paragraphLast {
-            font-size: 18px;
-            line-height: 1.6;
-            color:rgb(16, 16, 16);
-            margin: 0 0 12px;
-            text-align: left;
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            color: white;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 1.5rem;
+            border-radius: 10px;
             max-width: 600px;
         }
 
-        .hero {
-            height: 300px;
-            background-image: url('https://s28164.pcdn.co/files/capybara-1920x1080-2024-600x400.jpg');
-            background-size: cover;
-            background-position: center;
-            border-radius: 6px;
-            margin: 20px auto;   
+        .hero-text h1 {
+            font-size: 2rem;
+            margin-bottom: 0 0 0.5rem;
+        }
+
+        .hero-text p {
+            font-size: 1 rem;
+            margin: 0.5rem 0;
+            line-height: 1.4;
         }
 
         .section {
-            text-align: left;
+            padding: 2rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
             }
+
         .section ul {
             padding-left: 20px;
         }
@@ -101,14 +127,15 @@
                 margin: 10px;
                 padding-bottom: 0;
             } 
+
             body {
                 background-color: rgb(203, 186, 233);
             }
             .hero {
-                height: 360px;
-                background-image: url('https://a-z-animals.com/media/2023/09/shutterstock-1547421017-huge-licensed-scaled.jpg');
+                height: 45vh;    
             }
-            }
+        }
+    
 
         @media (min-width:1024px) {
             a {
@@ -139,10 +166,9 @@
             }
 
             .hero {
-                background-image: url('https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/15898774/capybara-1599766_1920.0.0.1473626820.jpg?quality=90&strip=all&crop=0%2C0%2C100%2C100&w=1440');
                 background-size: cover;
             }
-            }
+        }
     </style>
 </head>
 <body>
@@ -157,12 +183,15 @@
     </header>
 
     <main>
-        <h1>👋 Hi, I’m Fei!</h1>
-        <p id="addContent">I’m a designer learning to code. It still feels a bit outside my comfort zone, 
+       <section class="hero">
+        <img src="https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/15898774/capybara-1599766_1920.0.0.1473626820.jpg?quality=90&strip=all&crop=0%2C0%2C100%2C100&w=1440" alt="Capybara" class="hero-image">
+        <div class="hero-text">
+         <h1>👋 Hi, I’m Fei!</h1>
+         <p>I’m a designer learning to code. It still feels a bit outside my comfort zone, 
            but I’m here to practice, get curious, and bring ideas to life. </p>
-        <p id="paragraphLast">I also run a small Etsy shop and love plants and my dog. My favorite animal is Capybara. </p>
-        <div class="hero">
+         <p>I also run a small Etsy shop and love plants and my dog. My favorite animal is Capybara. </p>
         </div>
+        </section> 
 
         <div class="section">
           <h2>🌱 What I’m Working On</h2>
