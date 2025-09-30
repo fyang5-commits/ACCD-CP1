@@ -90,7 +90,7 @@
             position: relative;
             width: 100%;
             height: 35vh;
-            background: rgb(209, 158, 235);
+            background: rgb(230, 197, 247);
             background-size: cover;
             display: flex;
             align-items: center;
@@ -106,6 +106,7 @@
         .work-banenr-content h2 {
             font-size: 2rem;
             margin: 0 0 1rem;
+            color:#000;
         }
         .work-banenr-content a {
             display: inline-block;
@@ -171,8 +172,11 @@
         
 
         @media (min-width: 768px) {
+            h2 {
+                color: #131212;
+            }
             .work-banner {
-                background-color:#3320c0;
+                background-color:#d49def;
             }
             .grid-2 {
                 grid-template-columns: 1fr 1fr;
@@ -181,7 +185,7 @@
                 display: flex;
                 flex-direction: row;
                 justify-content: space-evenly;
-                background-color: rgb(209, 158, 235);
+                background-color: transparent
             }
             nav ul li {
                 border-bottom: none;
@@ -199,8 +203,15 @@
     
 
         @media (min-width:1024px) {
-            nav ul li {
+             h2 {
+                color: #ffffff;
+            }
+            nav ul li a {
                 color: #fff;
+            }
+
+            .work-banner {
+                background-color:#6110d4;
             }
             .work-banenr-content {
                 color:#000
