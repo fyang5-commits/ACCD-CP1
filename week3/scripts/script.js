@@ -16,7 +16,13 @@ let changeColor = function()
 
 let toggleImage = function()
 {
-    console.log("Button clicked");
+    console.log(qImage.src);
+    if (qImage.src.includes("quokka1")) {
+        qImage.src = "images/quokka2.jpg";
+    }
+    else {
+        qImage.src = "images/quokka1.jpg";
+    }
 }
 qButton.addEventListener("click", toggleImage);
 cButton.addEventListener("click", changeColor);
