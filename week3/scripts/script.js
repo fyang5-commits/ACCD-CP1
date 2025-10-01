@@ -1,6 +1,9 @@
 let cStage = document.getElementById("colorStage");
 let cButton = document.getElementById("colorButton");
 
+const qImage = document.getElementById("quokkaImage");
+const qButton = document.getElementById("imageToggle");
+
 let changeColor = function() 
 {
     let rComp = Math.random() * 255
@@ -11,5 +14,10 @@ let changeColor = function()
     + gComp + "," + bComp + ")";
 }
 
+let toggleImage = function()
+{
+    console.log("Button clicked");
+}
+qButton.addEventListener("click", toggleImage);
 cButton.addEventListener("click", changeColor);
 window.addEventListener("load", changeColor);
