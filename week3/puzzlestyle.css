@@ -27,10 +27,12 @@
       justify-content: center;
       gap: 18px;
       padding: 64px 20px;
+      transform: translateY(-40px);
     }
 
     .actions {
       display: flex;
+      justify-content: center;
       gap: 12px;
     }
 
@@ -52,6 +54,7 @@
       gap: 28px;
       margin: 28px 0 14px;
       perspective: 1000px;
+      flex-wrap: nowrap;
     }
 
     .card {
@@ -174,4 +177,74 @@
     }
     .wiggle {
       animation: wiggle 0.4s ease;
+    }
+
+    /* ========== Tablet (<= 900px) ========== */
+    @media (max-width: 900px){
+    .stage{
+        padding: 48px 16px;
+        transform: translateY(-20px);   
+        gap: 16px;
+    }
+
+    h1{ font-size: 1.8rem; }
+    p { max-width: 560px; }
+
+    .cards{
+        gap: 16px;
+        margin: 22px 0 12px;
+    }
+
+    .card{
+        width: 160px;
+        height: 220px;
+        border-radius: 12px;
+    }
+    .face{ border-radius: 12px; padding: 14px 16px; }
+    .front{ font-size: 36px; }
+    .back h3{ font-size: 16px; }
+    .back p{ font-size: 13px; line-height: 1.4; }
+
+    .actions{ gap: 10px; }
+    button{ padding: 10px 18px; font-size: 14.5px; }
+    }
+
+    /* ========== Phone (<= 600px) ========== */
+    @media (max-width: 600px){
+    /* Slightly stronger overlay so text pops on small screens */
+    body::before{ background: rgba(0,0,0,0.6); }
+
+    .stage{
+        padding: 36px 14px;
+        transform: translateY(-10px);
+        gap: 14px;
+    }
+
+    h1{ font-size: 1.5rem; }
+    p { max-width: 92%; font-size: 0.95rem; }
+
+    .cards{
+        gap: 12px;
+        margin: 16px 0 10px;
+    }
+
+    .card{
+        width: 120px;
+        height: 180px;
+        border-radius: 12px;
+    }
+    .face{ padding: 12px; }
+    .front{ font-size: 28px; }
+    .back h3{ font-size: 15px; }
+    .back p{ font-size: 12px; line-height: 1.35; }
+
+    .actions{
+        gap: 8px;
+        justify-content: center;   /* keep buttons on one line */
+    }
+    button{
+        padding: 9px 14px;
+        font-size: 13.5px;
+        white-space: nowrap;       /* prevent wrapping labels */
+    }
     }
