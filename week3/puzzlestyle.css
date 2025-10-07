@@ -19,6 +19,21 @@
       z-index: -1;
     }
 
+    .stage {
+      min-height: 100svh;
+      display: flex;;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      padding: 64px 20px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+    }
+
     h1 {
       margin-bottom: 8px;
       font-size: 2rem;
@@ -34,15 +49,14 @@
     .cards {
       display: flex;
       justify-content: center;
-      gap: 24px;
-      margin: 30px 0;
+      gap: 28px;
+      margin: 28px 0 14px;
       perspective: 1000px;
     }
 
     .card {
-      width: 180px;
-      height: 240px;
-      margin: 50px 0;
+      width: 200px;
+      height: 260px;
       position: relative;
       cursor: pointer;
       transform-style: preserve-3d;
@@ -63,13 +77,14 @@
 
     .face {
       position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 14px;
-      backface-visibility: hidden;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
+      border-radius: 14px;
+      backface-visibility: hidden;
+      padding: 16px 18ox;
+      box-sizing: border-box;
     }
 
     /* ===== Card Front ===== */
@@ -79,7 +94,7 @@
         radial-gradient(120px 80px at 70% 70%, rgba(90,61,242,0.18), transparent 60%),
         linear-gradient(180deg, #1b1c31 0%, #121224 100%);
       color: #fff;
-      font-size: 40px;
+      font-size: 42px;
       box-shadow: inset 0 0 10px rgba(255,255,255,0.1);
       user-select: none;
     }
@@ -92,6 +107,7 @@
       transform: rotateY(180deg);
       display: flex;
       flex-direction: column;
+      gap: 8px;
       justify-content: center;
       align-items: center;
       text-align: center;
@@ -99,15 +115,15 @@
     }
 
     .back h3 {
-      margin: 8px 0 6px;
-      font-size: 17px;
+      margin: 0;
+      font-size: 18px;
       color: #f7c56a;
     }
 
     .back p {
       margin: 0;
       font-size: 14px;
-      line-height: 1.4;
+      line-height: 1.45;
       opacity: 0.95;
       padding: 0 6px;
     }
