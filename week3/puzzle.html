@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Fortune Teller Cards 🔮</title>
+  <link rel="stylesheet" href="puzzlestyle.css">
+</head>
+<body>
+  <h1>Pick a Card</h1>
+  <p>Focus on the crystal ball. Flip a card to reveal your fortune, or shuffle them first!</p>
+
+  <!-- ===== Fortune Cards ===== -->
+  <div class="cards">
+    <div class="card" data-id="1">
+      <div class="face front">☽★</div>
+      <div class="face back">
+        <h3>The Path Opens</h3>
+        <p>Something you have been avoiding becomes simple once you take the first tiny step today.</p>
+      </div>
+    </div>
+
+    <div class="card" data-id="2">
+      <div class="face front">♠︎♣︎</div>
+      <div class="face back">
+        <h3>Helpful Stranger</h3>
+        <p>A short message or comment gives you the exact hint you needed. Be ready to follow up.</p>
+      </div>
+    </div>
+
+    <div class="card" data-id="3">
+      <div class="face front">✦✧</div>
+      <div class="face back">
+        <h3>Make It Real</h3>
+        <p>Write the idea down and ship a tiny version. Momentum beats perfection right now.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Log + Buttons ===== -->
+  <div id="log">No card chosen yet.</div>
+  <button id="resetBtn">Reset</button>
+  <button id="shuffleBtn">Shuffle</button>
+  <script src="scripts/puzzle.js"></script>
+</body>
+</html>

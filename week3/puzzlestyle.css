@@ -1,0 +1,161 @@
+    /* ===== Page Background ===== */
+    body {
+      font-family: Arial, sans-serif;
+      background: url(images/Crystal_Ball_bg1.jpg) no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+      padding: 60px 20px;  /* Increased top-bottom padding */
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Dark overlay for readability */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: -1;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+      font-size: 2rem;
+    }
+
+    p {
+      max-width: 500px;
+      margin: 0 auto 25px;
+      line-height: 1.5;
+    }
+
+    /* ===== Card Layout ===== */
+    .cards {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin: 30px 0;
+      perspective: 1000px;
+    }
+
+    .card {
+      width: 180px;
+      height: 240px;
+      margin: 50px 0;
+      position: relative;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(.2,.7,.2,1),
+                  box-shadow 0.3s ease, transform 0.3s ease;
+      border-radius: 14px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.45);
+    }
+
+    .card:hover {
+      transform: translateY(-6px) scale(1.03) rotateY(0deg);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+    }
+
+    .card.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    .face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 14px;
+      backface-visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ===== Card Front ===== */
+    .front {
+      background:
+        radial-gradient(120px 80px at 30% 30%, rgba(247,197,106,0.15), transparent 60%),
+        radial-gradient(120px 80px at 70% 70%, rgba(90,61,242,0.18), transparent 60%),
+        linear-gradient(180deg, #1b1c31 0%, #121224 100%);
+      color: #fff;
+      font-size: 40px;
+      box-shadow: inset 0 0 10px rgba(255,255,255,0.1);
+      user-select: none;
+    }
+
+    /* ===== Card Back ===== */
+    .back {
+      background: linear-gradient(180deg, #14142a 0%, #0f0f21 100%);
+      color: #fff;
+      padding: 16px;
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
+    }
+
+    .back h3 {
+      margin: 8px 0 6px;
+      font-size: 17px;
+      color: #f7c56a;
+    }
+
+    .back p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.4;
+      opacity: 0.95;
+      padding: 0 6px;
+    }
+
+    /* ===== Buttons ===== */
+    #log {
+      margin: 16px 0 20px;
+    }
+
+    button {
+      padding: 10px 22px;
+      margin: 0 6px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    #resetBtn {
+      background: linear-gradient(180deg, #3cb371, #2e8b57);
+      box-shadow: 0 3px 8px rgba(46,139,87,0.4);
+    }
+
+    #resetBtn:hover {
+      background: linear-gradient(180deg, #45c182, #2f9460);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(46,139,87,0.5);
+    }
+
+    #shuffleBtn {
+      background: linear-gradient(180deg, #8e44ad, #5e3374);
+      box-shadow: 0 3px 8px rgba(94,51,116,0.4);
+    }
+
+    #shuffleBtn:hover {
+      background: linear-gradient(180deg, #9b59b6, #6b3d8d);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(94,51,116,0.5);
+    }
+
+    /* Tiny shuffle wiggle */
+    @keyframes wiggle {
+      0%, 100% { transform: rotateY(0deg); }
+      25% { transform: rotateY(-10deg); }
+      75% { transform: rotateY(10deg); }
+    }
+    .wiggle {
+      animation: wiggle 0.4s ease;
+    }
