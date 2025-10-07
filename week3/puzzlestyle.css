@@ -34,7 +34,13 @@
     .actions {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 12px;
+      flex-wrap: nowrap;
+    }
+
+    .actions button {
+        margin: 0;
     }
 
     h1 {
