@@ -20,6 +20,17 @@
       margin-bottom: 20px;
     }
 
+    header a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    margin-left: 20px;
+    }
+
+    header a:hover {
+    color: #2563eb;
+    }
+
     .thumbs {
       display: flex;
       justify-content: center;
@@ -53,6 +64,10 @@
 <body>
   <header>
     <strong>Image Gallery</strong>
+     <a href="#">Link 1</a> |
+     <a href="#">Link 2</a> |
+     <a href="#">Link 3</a> |
+     <a href="#">Link 4</a>
   </header>
 
   <div class="thumbs">
@@ -62,7 +77,13 @@
     <img src="images/scarlet.jpg" alt="A cute image of scarlet" onclick="changeImage(3)">
   </div>
 
-  <img id="largeImage" src="image/quokka2.jpg" alt="Large display">
+  <img id="largeImage" src="images/quokka2.jpg" alt="Large display">
+
+    <div class="controls">
+    <button id="prevBtn">Prev</button>
+    <button id="playBtn">Pause</button>
+    <button id="nextBtn">Next</button>
+    </div>
 
   <script>
 
@@ -75,8 +96,15 @@
     "images/scarlet.jpg"
     ];
 
-    let currentIndex = 0;
+    const playBtn = document.getElementById("playBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
 
+    let currentIndex = 0;
+    let timer = null;        
+    const INTERVAL = 2000;   
+
+ 
     let changeImage = function(index) {
       largeImage.src = imageList[index];
       currentIndex = index;
@@ -90,7 +118,38 @@
       largeImage.src = imageList[currentIndex];
     }
 
-    setInterval(toggleImage, 2000);
+    let startAuto = function() {
+    stopAuto(); 
+    timer = setInterval(toggleImage, INTERVAL);
+    playBtn.textContent = "Pause";
+    };
+
+    let stopAuto = function() {
+    if (timer) {
+        clearInterval(timer);
+        timer = null;
+    }
+    playBtn.textContent = "Play";
+    };
+
+    startAuto();
+
+    playBtn.addEventListener("click", function () {
+    if (timer) {
+        stopAuto();     
+    } else {
+        startAuto();    
+    }
+    });
+
+    prevBtn.addEventListener("click", function () {
+    currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
+    largeImage.src = imageList[currentIndex];
+    });
+
+    nextBtn.addEventListener("click", function () {
+    toggleImage();
+    });
   </script>
 </body>
 </html>
