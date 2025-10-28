@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Low-Poly Modelling in Blender — Project Documentation</title>
+  <meta name="description" content="Documentation for Low-poly Modelling in Blender assignment with lightbox viewing.">
+  <style>
+    :root{
+      --bg:#fafafa;
+      --card:#ffffff;
+      --ink:#111;
+      --muted:#666;
+      --accent:#4f46e5;
+      --border:#e6e6e6;
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.6;
+    }
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{
+      max-width:1100px;
+      margin:0 auto;
+      padding:24px 20px 0;
+    }
+    .hero{
+      background:linear-gradient(135deg,#eef2ff,#f8fafc);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:28px 24px;
+      margin-bottom:20px;
+    }
+    .hero h1{
+      margin:0 0 6px;
+      font-size:clamp(24px,5vw,36px);
+    }
+    .meta{color:var(--muted);font-size:14px;margin-top:6px;}
+    main{
+      max-width:1100px;
+      margin:0 auto;
+      padding:8px 20px 40px;
+      display:grid;
+      gap:20px;
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:24px;
+    }
+    h2{margin:0 0 14px;font-size:24px;}
+    h3{margin:24px 0 12px;font-size:18px;}
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:22px;
+    }
+    figure{margin:0}
+    .thumb{
+      width:100%;
+      height:240px;
+      object-fit:cover;
+      border-radius:14px;
+      border:1px solid #e5e7eb;
+      box-shadow:0 6px 18px rgba(0,0,0,0.06);
+      cursor:zoom-in;
+      transition:transform .25s ease, box-shadow .25s ease;
+      background:#f8fafc;
+    }
+    .thumb:hover{
+      transform:scale(1.02);
+      box-shadow:0 10px 22px rgba(0,0,0,0.10);
+    }
+    figcaption{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:15px;
+      text-align:center;
+    }
+
+    /* video embed block */
+    .video-frame-wrapper{
+      position:relative;
+      width:100%;
+      max-width:800px;
+      aspect-ratio:16 / 9;
+      border-radius:12px;
+      overflow:hidden;
+      border:1px solid var(--border);
+      background:#000;
+      box-shadow:0 12px 32px rgba(0,0,0,.15);
+      margin:16px 0 8px;
+    }
+    .video-frame-wrapper iframe{
+      width:100%;
+      height:100%;
+      border:0;
+    }
+    .video-note{
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.4;
+      max-width:800px;
+    }
+
+    footer{
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      padding:28px 0 10px;
+    }
+
+    @media (max-width:1020px){
+      .grid-3{grid-template-columns:repeat(2,1fr);}
+      .thumb{height:280px}
+    }
+    @media (max-width:680px){
+      .grid-3{grid-template-columns:1fr;}
+      .thumb{height:320px}
+    }
+
+    /* ===== Lightbox ===== */
+    .lightbox{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.9);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:1000;
+    }
+    .lightbox.open{ display:flex; }
+    .lb-stage{
+      position:relative;
+      max-width:96vw; max-height:92vh;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+    }
+    .lb-img{
+      max-width:96vw; max-height:86vh;
+      border-radius:12px;
+      box-shadow:0 20px 48px rgba(0,0,0,.5);
+      user-select:none;
+    }
+    .lb-cap{
+      color:#e5e7eb; font-size:14px; margin-top:10px; text-align:center;
+      max-width:90vw;
+    }
+    .lb-btn{
+      position:absolute; top:50%; transform:translateY(-50%);
+      width:48px; height:48px; border-radius:999px;
+      background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25);
+      color:#fff; display:grid; place-items:center; cursor:pointer; user-select:none;
+    }
+    .lb-btn:hover{ background:rgba(255,255,255,.2); }
+    .lb-prev{ left:-60px; }
+    .lb-next{ right:-60px; }
+    .lb-close{
+      position:absolute; top:-56px; right:0;
+      width:40px; height:40px; border-radius:999px;
+      background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25);
+      display:grid; place-items:center; cursor:pointer;
+      color:#fff;
+    }
+    .lb-close:hover{ background:rgba(255,255,255,.2); }
+    @media (max-width:760px){
+      .lb-prev{ left:12px; }
+      .lb-next{ right:12px; }
+      .lb-close{ top:12px; right:12px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <h1>Low-Poly Modelling in Blender</h1>
+      <div class="meta">Week 4 documentation for submission. Click any image to view full-screen.</div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- IMAGE GALLERY -->
+    <section class="card">
+      <h2>Final Renders</h2>
+      <div class="grid-3" id="gallery">
+        <figure>
+          <img class="thumb" src="assets/render_1.png" data-caption="Render 1 — Front view" alt="Low-poly object render 1">
+          <figcaption>Render 1 — Front view</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="assets/render_2.png" data-caption="Render 2 — Side view" alt="Low-poly object render 2">
+          <figcaption>Render 2 — Side view</figcaption>
+        </figure>
+        <figure>
+          <img class="thumb" src="assets/render_3.png" data-caption="Render 3 — Scene overview" alt="Low-poly object render 3">
+          <figcaption>Render 3 — Scene overview</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- DOCUMENTATION / PROCESS FOR LIVING ROOM SCENE -->
+    <section class="card">
+      <h2>Scene Documentation: Living Room + Health Dashboard</h2>
+
+      <p>
+        For this part of the project, I created a cozy <strong>living room scene</strong> with a tablet on a coffee table.
+        The tablet screen shows my <strong>doctor schedule dashboard UI</strong>. The idea is that a user can sit at home,
+        open the dashboard, and book an appointment any time — no clinic phone call, no waiting on hold.
+      </p>
+
+      <p>
+        The visual direction came from browsing <strong>interior display photos on Target’s website</strong>. I liked how those
+        product shots staged furniture, plants, and decor in calm lighting. That inspired me to build a space that feels
+        warm and lived-in, not like a tech demo. The focal point became the round table, the plant, and the tablet.
+      </p>
+
+      <p>
+        I tried to model a lamp from scratch at first, but I got stuck on the <em>vertex merge</em> and <em>extrude</em> steps.
+        The geometry wasn’t doing what I expected, so I ended up pulling a lamp asset from BlenderKit instead. That let me
+        keep moving and focus on layout, materials, and lighting instead of getting completely blocked on hard-surface
+        modeling. I do want to come back and practice that more.
+      </p>
+
+      <p>
+        For lighting, I used soft area lights to fake indoor bounce lighting and keep the shadows gentle. I set the camera
+        at a low, eye-level angle so the viewer feels like they’re actually in the room, looking across the table at the tablet.
+        This angle also shows off the table material, the plant, and the woven textures in the scene.
+      </p>
+
+      <p>
+        Overall, this scene helped me understand <strong>composition, mood, and storytelling</strong>, not just “make an object.”
+        I also learned it’s okay to mix my own work with library assets if it helps communicate the idea clearly on deadline.
+      </p>
+    </section>
+
+    <!-- VIDEO EMBED -->
+    <section class="card">
+      <h2>Render Video</h2>
+
+      <p>This is the short animation render for the scene. It was exported from Blender as a video, then converted and uploaded to Google Drive.</p>
+
+      <div class="video-frame-wrapper">
+        <iframe
+          src="https://drive.google.com/file/d/1kQBXC1iLeIkrDM5Cde46FKtrjc-mtJ2z/preview"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+          title="Blender Render Video">
+        </iframe>
+      </div>
+
+      <div class="video-note">
+        Note: This clip was rendered as a very short sequence (about 10 frames). I originally tried to render
+        the full animation in Cycles, but it was extremely slow. I switched to a faster workflow using Eevee /
+        viewport render and then converted the output to an .mp4 for embedding here.
+      </div>
+    </section>
+
+    <!-- PROCESS & LEARNING -->
+    <section class="card">
+      <h2>Process & Learning</h2>
+
+      <p>For this project, I followed the Donut tutorial to get hands-on practice with Blender. My main goal wasn’t just to finish the donut, but to get comfortable with the basics, hotkeys, modifiers, materials, lighting, and even a bit of geometry nodes.</p>
+
+      <p>It definitely wasn’t a smooth ride. I got lost a few times because my Blender version was different from the one in the tutorial, so some tools were renamed or hidden in different places. A few steps didn’t work the same way on my screen, which made me pause and troubleshoot on my own.</p>
+
+      <p>In my <strong>first render</strong>, the sprinkle shapes came out tiny, like microscopic. I had to readjust the scale manually, and while it improved a little, it still didn’t look quite right. In the <strong>second render</strong>, I ran into a rotation issue, the pivot point of my donut somehow ended up far away, so rotating it made the whole thing spin weirdly. By the <strong>third render</strong>, I finally figured it out and fixed the problem.</p>
+
+      <p>Even though these mistakes were frustrating, they actually helped me understand Blender’s logic better. I started to see how object origins, scaling, and geometry nodes all connect. Now when something goes wrong, I don’t panic, I look for the cause and learn from it.</p>
+
+      <p><strong>What I learned:</strong> This project taught me that making mistakes is part of the learning process. Every failed render brought me one step closer to understanding how Blender really works. Next time, I want to experiment more confidently and start tweaking materials and lighting on my own instead of just following the tutorial.</p>
+
+      <h3>Notes & Hotkeys</h3>
+      <ul>
+        <li><strong>Shift + A</strong> — Add new object</li>
+        <li><strong>G</strong> — Move object</li>
+        <li><strong>R</strong> — Rotate object</li>
+        <li><strong>S</strong> — Scale object</li>
+        <li><strong>M</strong> — Mask</li>
+        <li><strong>Tab</strong> — Switch between Edit and Object mode</li>
+        <li><strong>Shift + D</strong> — Duplicate object</li>
+      </ul>
+    </section>
+
+    <!-- RESOURCES -->
+    <section class="card">
+      <h2>Resources</h2>
+      <ul>
+        <li><a href="https://docs.blender.org/manual/en/latest/" target="_blank" rel="noopener">Blender Manual</a></li>
+        <li><a href="https://www.blender.org/support/tutorials/" target="_blank" rel="noopener">Official Tutorials</a></li>
+        <li><a href="#" title="Replace with your class resource link">3D Design — Tools and Resources</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Made by <strong>Your Name</strong>. Update this page and publish via GitHub Pages for submission.</p>
+  </footer>
+
+  <!-- Lightweight lightbox (no dependencies) -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lb-stage">
+      <img class="lb-img" id="lbImg" alt="Expanded render">
+      <div class="lb-cap" id="lbCap"></div>
+      <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous">&#10094;</button>
+      <button class="lb-btn lb-next" id="lbNext" aria-label="Next">&#10095;</button>
+      <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const thumbs = Array.from(document.querySelectorAll('#gallery .thumb'));
+      const lb = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lbImg');
+      const lbCap = document.getElementById('lbCap');
+      const btnPrev = document.getElementById('lbPrev');
+      const btnNext = document.getElementById('lbNext');
+      const btnClose = document.getElementById('lbClose');
+      let idx = 0;
+
+      function open(i){
+        idx = i;
+        const t = thumbs[idx];
+        lbImg.src = t.src;
+        lbCap.textContent = t.dataset.caption || t.alt || '';
+        lb.classList.add('open');
+        lb.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      }
+      function close(){
+        lb.classList.remove('open');
+        lb.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+        lbImg.src = '';
+      }
+      function prev(){ open( (idx - 1 + thumbs.length) % thumbs.length ); }
+      function next(){ open( (idx + 1) % thumbs.length ); }
+
+      thumbs.forEach((t,i)=>{
+        t.addEventListener('click', ()=>open(i));
+        t.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' ') open(i); });
+        t.tabIndex = 0;
+        t.setAttribute('role','button');
+        t.setAttribute('aria-label','Open image viewer');
+      });
+      btnPrev.addEventListener('click', prev);
+      btnNext.addEventListener('click', next);
+      btnClose.addEventListener('click', close);
+      lb.addEventListener('click', (e)=>{ if(e.target===lb) close(); });
+      window.addEventListener('keydown', (e)=>{
+        if(!lb.classList.contains('open')) return;
+        if(e.key==='Escape') close();
+        if(e.key==='ArrowLeft') prev();
+        if(e.key==='ArrowRight') next();
+      });
+    })();
+  </script>
+</body>
+</html>
