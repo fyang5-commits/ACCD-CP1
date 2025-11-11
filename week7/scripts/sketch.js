@@ -2,6 +2,7 @@ let x = 100;
 
 function setup() {
   createCanvas(808, 608);
+  frameRate(30);
 }
 
 function draw() {

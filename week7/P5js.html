@@ -1,13 +1,136 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/main.css">
-    <title>My First Sketch</title>
+  <meta charset="utf-8" />
+  <title>Mondrian-Style Grid — Fei Yang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #f6f6f6;
+      --ink: #222;
+      --muted: #666;
+      --accent: #1356A2; /* blue, subtle */
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(180deg, #fff, var(--bg));
+    }
+    header, main {
+      max-width: 980px;
+      padding: 24px;
+      margin: 0 auto;
+    }
+    header h1 {
+      margin: 0 0 6px 0;
+      font-size: 1.6rem;
+      letter-spacing: 0.2px;
+    }
+    header p {
+      margin: 0;
+      color: var(--muted);
+    }
+    .frame-wrap {
+      margin: 20px 0 8px;
+      border: 3.5px solid #000;
+      background: #fff;
+      box-shadow: 0 8px 30px rgba(0,0,0,.08);
+      aspect-ratio: 4 / 3;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+    .meta {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    h2 {
+      font-size: 1.2rem;
+      margin: 18px 0 8px;
+    }
+    ul {
+      margin: 0 0 16px 1.2em;
+      line-height: 1.5;
+    }
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border: 1.5px solid var(--accent);
+      color: var(--accent);
+      border-radius: 999px;
+      font-size: 12px;
+      margin-right: 8px;
+    }
+    .grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      margin-top: 8px;
+    }
+    .card {
+      padding: 14px 16px;
+      background: #fff;
+      border: 1px solid #e9e9e9;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,.05);
+    }
+  </style>
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-    <script src="scripts/sketch.js"></script>
+  <header>
+    <h1>Mondrian-Style Pattern, Rhythm & Movement</h1>
+    <p class="meta">p5.js study — grid composition + simple motion</p>
+    <span class="tag">grid()</span>
+    <span class="tag">random()</span>
+    <span class="tag">bounce</span>
+    <span class="tag">sin() sway</span>
+  </header>
+
+  <main>
+    <div class="frame-wrap">
+      <iframe src="https://editor.p5js.org/fyang5-commits/full/TDwUrxKWH" allowfullscreen></iframe>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Process (quick notes)</h2>
+        <ul>
+          <li>Started from class references: pattern + grid with simple motion.</li>
+          <li>Built a <strong>grid helper</strong> <code>g(n)</code> to place things by “cells,” not pixels.</li>
+          <li>Kept <strong>static black blocks</strong> randomized in <code>setup()</code> (new layout on refresh).</li>
+          <li>Used <strong>bounce (vx/vy)</strong> for the big red square — same logic as the moving circle demo.</li>
+          <li>Added one <strong>slow sway</strong> rectangle (yellow) using <code>sin(frameCount * freq)</code>.</li>
+          <li>Palette sticks to red/blue/yellow/black/white for that abstract print vibe.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Challenges</h2>
+        <ul>
+          <li><strong>Grid scale & density:</strong> early grid was too tight; switched to bigger cells for blocky “print” feel.</li>
+          <li><strong>Overlap control:</strong> avoided placing random blacks on top of the red square / color bar.</li>
+          <li><strong>Motion pacing:</strong> tuned <code>freq</code> and <code>amp</code> so the yellow sway feels calm, not jittery.</li>
+          <li><strong>Teacher-style code:</strong> replaced raw pixel math with a simple <code>g(n)</code> function + guide lines array.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>What I’d try next</h2>
+        <ul>
+          <li>Swap guide lines per scene to study different balance/negative space.</li>
+          <li>Light “paper” texture pass (very subtle) to test print vibes — optional.</li>
+          <li>Param knobs in UI (grid size, sway speed) for quick iterations in class.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
 </body>
 </html>
