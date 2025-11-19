@@ -99,33 +99,37 @@
       <iframe src="https://editor.p5js.org/fyang5-commits/full/5zB8M-tqI"></iframe>" allowfullscreen></iframe>
     </div>
 
+    <div class="frame-wrap">
+      <iframe src="https://editor.p5js.org/fyang5-commits/full/YiR5FN1I6"></iframe>" allowfullscreen></iframe>
+    </div>
+
     <div class="grid">
       <section class="card">
-        <h2>Process (quick notes)</h2>
+        <h2>Process</h2>
         <ul>
-          <li>Started from class references: pattern + grid with simple motion.</li>
-          <li>Built a <strong>grid helper</strong> <code>g(n)</code> to place things by “cells,” not pixels.</li>
-          <li>Kept <strong>static black blocks</strong> randomized in <code>setup()</code> (new layout on refresh).</li>
-          <li>Used <strong>bounce (vx/vy)</strong> for the big red square — same logic as the moving circle demo.</li>
-          <li>Added one <strong>slow sway</strong> rectangle (yellow) using <code>sin(frameCount * freq)</code>.</li>
+          <li>I started with the class demos (pattern + grid + simple motion) and then explored how to build my own grid system.</li>
+          <li>I created a small g(n) grid helper so I could place shapes by cells instead of pixels, which made everything easier to control and align.</li>
+          <li>I kept the randomized black rectangles generated inside setup(), so each refresh creates a new layout.</li>
+          <li>For motion, I reused the bounce logic from class for the big red square (same idea as the moving circle).</li>
+          <li>I added a slower, calmer motion for the yellow rectangle using sin(frameCount * freq), which gave the piece a more subtle rhythm.</li>
         </ul>
       </section>
 
       <section class="card">
         <h2>Challenges</h2>
         <ul>
-          <li><strong>Grid scale & density:</strong> early grid was too tight; switched to bigger cells for blocky “print” feel.</li>
-          <li><strong>Overlap control:</strong> avoided placing random blacks on top of the red square / color bar.</li>
-          <li><strong>Motion pacing:</strong> tuned <code>freq</code> and <code>amp</code> so the yellow sway feels calm, not jittery.</li>
+          <li><strong>Grid scale & density:</strong> My early grids were too tight visually. I switched to larger cells to make the piece feel more “block print” and closer to a Mondrian layout.</li>
+          <li><strong>Overlap control:</strong> I had to prevent random black rectangles from spawning on top of the moving red square or the blue bar. This required extra checks for collisions.</li>
+          <li><strong>Motion pacing:</strong> I tuned the sway speed and amplitude so the yellow block feels smooth instead of jittery. Getting that “calm motion” feeling took a few iterations.</li>
         </ul>
       </section>
 
       <section class="card">
         <h2>What I’d try next</h2>
         <ul>
-          <li>Swap guide lines per scene to study different balance/negative space.</li>
-          <li>Light “paper” texture pass (very subtle) to test print vibes — optional.</li>
-          <li>Param knobs in UI (grid size, sway speed) for quick iterations in class.</li>
+          <li>Swap out different guide-line layouts to study balance and negative space in different compositions.</li>
+          <li>Light “paper” texture pass (very subtle) to test print vibes.</li>
+          <li>next step would be adding a subtle paper texture or a Mondrian reference image to reinforce the printmaking or painting feeling.</li>
         </ul>
       </section>
     </div>
