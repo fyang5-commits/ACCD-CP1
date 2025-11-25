@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Time and Oscillation – Rainbow Machine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #111;
+      color: #f5f5f5;
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 2rem 1.5rem 1rem;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0 0 0.5rem;
+      font-size: 2rem;
+      letter-spacing: 0.03em;
+    }
+
+    h2 {
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+      font-size: 1.4rem;
+    }
+
+    p {
+      max-width: 800px;
+      margin: 0.25rem auto;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto 3rem;
+      padding: 0 1.5rem 3rem;
+    }
+
+    .iframe-wrapper {
+      margin: 1.5rem auto 0;
+      max-width: 900px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #333;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    iframe {
+      width: 100%;
+      height: 520px;
+      border: none;
+      display: block;
+    }
+
+    .note {
+      font-size: 0.9rem;
+      color: #bbbbbb;
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+
+    .gallery {
+      margin-top: 1.5rem;
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    figure {
+      background: #181818;
+      border-radius: 12px;
+      padding: 1rem;
+      border: 1px solid #2b2b2b;
+    }
+
+    figure img {
+      width: 100%;
+      display: block;
+      border-radius: 8px;
+      background: #000;
+    }
+
+    figcaption {
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
+      color: #d6d6d6;
+    }
+
+    .label {
+      font-weight: 600;
+      color: #ffd46b;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    @media (max-width: 600px) {
+      iframe {
+        height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Time and Oscillation – Rainbow Machine</h1>
+    <p>
+      This sketch explores repeated motion using trigonometric functions, time based intervals,
+      and small random variations. A rainbow fan, rotating squares, and bouncing orbs share the same
+      space but move on different rhythms.
+    </p>
+  </header>
+
+  <main>
+    <section id="sketch">
+      <h2>Interactive Sketch</h2>
+      <p>
+        The p5.js sketch below is embedded from the online editor.
+      </p>
+
+      <div class="iframe-wrapper">
+        <!-- Replace YOUR_P5_FULL_URL_HERE with your own full-screen p5 link -->
+        <iframe
+          src="<iframe src="https://editor.p5js.org/fyang5-commits/full/4aA3BOptz"></iframe>"
+          title="Time and Oscillation Sketch"
+          loading="lazy"
+        ></iframe>
+      </div>
+
+      <p class="note">
+        Sketch built with <code>sin()</code>, <code>millis()</code>, <code>noise()</code>, transforms
+        like <code>translate()</code> and <code>rotate()</code>, plus a simple class with constructor arguments.
+      </p>
+    </section>
+
+    <section id="process">
+      <h2>Process Snapshots</h2>
+      <p>
+        During the process I captured six stages of the animation. Each step shows how I layered
+        different concepts from the class demos to reach the final motion.
+      </p>
+
+      <div class="gallery">
+        <!-- Snapshot 1 -->
+        <figure>
+          <!-- Replace snapshot1.png with your exported image file -->
+          <img src="images/snapshot1.png" alt="Diagonal grid background" />
+          <figcaption>
+            <span class="label">Snapshot 1 – Base Grid and Layout</span>
+            Starting with a rotated grid in the background. This sets the structure and helps me test
+            movement with <code>translate()</code> and <code>rotate()</code>.
+          </figcaption>
+        </figure>
+
+        <!-- Snapshot 2 -->
+        <figure>
+          <img src="images/snapshot2.png" alt="First wobbling rainbow arc" />
+          <figcaption>
+            <span class="label">Snapshot 2 – First Rainbow Arc</span>
+            I added the first rainbow arc using <code>sin(millis())</code> to create a repeated wobble.
+            Here I focused on the timing and smoothness of the motion.
+          </figcaption>
+        </figure>
+
+        <!-- Snapshot 3 -->
+        <figure>
+          <img src="images/snapshot3.png" alt="Full rainbow fan with organic edges" />
+          <figcaption>
+            <span class="label">Snapshot 3 – Full Rainbow Fan With Noise</span>
+            The full fan of arcs is now visible. Each ring has a slightly different speed,
+            and <code>noise()</code> shifts the arc angles to make the rainbow feel more organic.
+          </figcaption>
+        </figure>
+
+        <!-- Snapshot 4 -->
+        <figure>
+          <img src="images/snapshot4.png" alt="Layer of rotating squares" />
+          <figcaption>
+            <span class="label">Snapshot 4 – Rotating Squares Layer</span>
+            I added nested colored squares in the center. They share a base angle but rotate with
+            small offsets, creating another oscillating rhythm on top of the rainbow.
+          </figcaption>
+        </figure>
+
+        <!-- Snapshot 5 -->
+        <figure>
+          <img src="images/snapshot5.png" alt="Frozen orbs at the bottom" />
+          <figcaption>
+            <span class="label">Snapshot 5 – Orbs Before Moving</span>
+            A group of orbs is created using a class with constructor arguments for position,
+            size, and color. At this stage they are still frozen to highlight the time delay.
+          </figcaption>
+        </figure>
+
+        <!-- Snapshot 6 -->
+        <figure>
+          <img src="images/snapshot6.png" alt="Final scene with all motions" />
+          <figcaption>
+            <span class="label">Snapshot 6 – Final Motion</span>
+            In the final state everything moves together. The rainbow wobbles, the squares rotate,
+            and the orbs start bouncing after a four second delay, creating a complex motion rhythm.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
