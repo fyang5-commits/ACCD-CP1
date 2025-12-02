@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Venus Flytrap Game – Process Documentation</title>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    margin: 40px auto;
+    max-width: 900px;
+    line-height: 1.6;
+    color: #eee;
+    background: #111;
+  }
+  h1, h2, h3 {
+    color: #7fffb0;
+  }
+  img {
+    max-width: 100%;
+    border-radius: 6px;
+    margin: 12px 0;
+  }
+  .section {
+    margin-bottom: 48px;
+  }
+  .code-block {
+    background: #222;
+    padding: 12px;
+    border-radius: 6px;
+    font-family: "Menlo", monospace;
+    white-space: pre-wrap;
+  }
+
+  .iframe-wrapper {
+    width: 100%;
+    margin: 20px 0;
+  }
+
+  .iframe-wrapper iframe {
+    width: 100%;
+    height: 600px; 
+    border: none;
+    border-radius: 8px;
+  }
+</style>
+
+</style>
+</head>
+
+<body>
+
+<h1>Venus Flytrap Game  
+<span style="font-size:18px; color:#bbb;">Process Documentation</span></h1>
+
+<div class="section">
+  <h2>01. Introduction</h2>
+  <p>
+    This project is an interactive mini-game built with p5.js for my creative coding assignment.  
+    The goal was to design a simple object-oriented system where multiple objects interact—
+    in this case: <strong>plants</strong> and <strong>flies</strong>.  
+  </p>
+  <p>
+    I wanted to create something playful, visually cute, and connected to nature.  
+    The Venus Flytrap felt perfect because it combines character, motion, and game-like feedback.
+  </p>
+</div>
+
+
+<div class="section">
+  <h2>02. Initial Idea & Inspiration</h2>
+  <p>
+    The core idea began with asking:
+  </p>
+  <blockquote>
+    “What if the plants could automatically catch moving flies,  
+    and the player could control the world conditions using sliders?”
+  </blockquote>
+  <p>
+    Inspiration sources included:
+    <ul>
+      <li>Simple arcade games (e.g., Pac-Man arc mouth → used for the plant head)</li>
+      <li>Cute nature icons</li>
+      <li>My interest in small interactive behaviors</li>
+    </ul>
+  </p>
+</div>
+
+
+<div class="section">
+  <h2>03. Sketches & Visual Exploration</h2>
+  <p>
+    I began with visual sketches to determine the plant shapes.  
+    The main goal: keep the plant iconic but readable when animated.
+  </p>
+
+  <p><em>Example sketch placeholder:</em></p>
+  <img src="images/Flowcharts.png" alt="Sketch Placeholder">
+
+  <p>
+    Challenges during sketching:
+    <ul>
+      <li>Finding a mouth shape that could open/close (solution: Pac-Man arc)</li>
+      <li>Balancing the leaf sizes so it didn’t look like a tree or bush</li>
+      <li>Making the design clear even at small scale</li>
+    </ul>
+  </p>
+</div>
+
+
+<div class="section">
+  <h2>04. Coding the System (Object-Oriented Programming)</h2>
+  <p>
+    The project uses three main classes:
+  </p>
+  <ul>
+    <li><strong>Fly</strong> – moves, bounces on edges, has type (healthy/toxic)</li>
+    <li><strong>Plant</strong> – grows or shrinks depending on fly type</li>
+    <li><strong>Sketch</strong> – manages global gameplay, UI controls, background, win/lose logic</li>
+  </ul>
+
+  <h3>Core OOP relationships:</h3>
+  <p>
+    Each <strong>Plant</strong> receives the array of <strong>Fly</strong> objects and decides:
+  </p>
+  <blockquote>
+    “Is there a fly near me? If yes, catch it.”
+  </blockquote>
+
+  <p>
+    Sliders directly modify global parameters:
+  </p>
+  <ul>
+    <li>Fly speed</li>
+    <li>Toxic fly ratio</li>
+    <li>Background color picker</li>
+  </ul>
+
+  <h3>Example pseudocode of the system:</h3>
+  <div class="code-block">
+Plant.update(flies):
+    look for nearest fly in range
+    if good fly → grow + increase score
+    if toxic fly → shrink + lose life
+    if energy hits 0 → plant dies
+
+Fly.update():
+    move based on base speed × slider value
+    bounce on edges
+  </div>
+</div>
+
+
+<div class="section">
+  <h2>05. Challenges</h2>
+  <p>
+    During development several challenges appeared:
+  </p>
+  <h3>❌ Challenge 1 — Plant head drawing looked wrong</h3>
+  <p>
+    The first version used circles, then triangles.  
+    The solution was using a <strong>Pac-Man–style arc</strong> rotated upward.</p>
+
+  <h3>❌ Challenge 2 — Controls overlapped plants</h3>
+  <p>
+    The default p5 DOM positioning wasn’t consistent.  
+    The fix was placing sliders <strong>outside the canvas</strong> and aligning text manually.</p>
+
+  <h3>❌ Challenge 3 — Flies stopped spawning</h3>
+  <p>
+    Caused by a missing <code>update()</code> call after DOM restructuring.  
+    Fixed by restoring the update loop:
+  </p>
+  <div class="code-block">fly.update(speedSlider.value());</div>
+
+  <h3>❌ Challenge 4 — Color picker broke layout</h3>
+  <p>
+    Setting the Y-offset too high hid the entire animation.  
+    Fixed by raising UI to <code>height + 10</code> instead of negative space.</p>
+</div>
+
+
+<div class="section">
+  <h2>06. Final Results</h2>
+  <p>
+    The final game includes:
+  </p>
+  <ul>
+    <li>Three interactive Venus Flytraps</li>
+    <li>Healthy and toxic flies with different colors</li>
+    <li>Growing/shrinking animation based on what they eat</li>
+    <li>Score + life system</li>
+    <li>Fly speed + toxic ratio sliders</li>
+    <li>Background color picker</li>
+  </ul>
+
+  <p><em>Final screenshot placeholder:</em></p>
+        <div class="iframe-wrapper">
+        <iframe
+          src="https://editor.p5js.org/fyang5-commits/full/8rEjA-lqy"></iframe>"
+          title="
+          Interactive Venus Flytrap Game"
+          loading="lazy"
+        ></iframe>
+      </div>
+</div>
+
+
+<div class="section">
+  <h2>07. Reflection</h2>
+  <p>
+    This project helped me understand:
+  </p>
+  <ul>
+    <li>How multiple classes communicate in an OOP system</li>
+    <li>How to use DOM elements with a p5.js canvas</li>
+    <li>How to debug animation logic when objects disappear</li>
+    <li>How simple visual design choices (like an arc) can solve readability issues</li>
+  </ul>
+
+  <p>
+    If I continue this project, I want to add:
+    <ul>
+      <li>Manual clicking to feed plants</li>
+      <li>Sound effects</li>
+      <li>Day-night cycle background</li>
+      <li>Random events like “super fly” or “storm”</li>
+    </ul>
+  </p>
+</div>
+
+
+</body>
+</html>
