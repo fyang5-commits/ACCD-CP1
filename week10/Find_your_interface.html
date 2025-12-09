@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Find Your Interface – Lively Plant Scanner</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 16px;
+    }
+    h1, h2, h3 {
+      margin-top: 1.6em;
+    }
+    figure {
+      margin: 1em 0;
+    }
+    figure img {
+      max-width: 100%;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+    figcaption {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 4px;
+    }
+    iframe {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Lively Plant Scanner – Find Your Interface</h1>
+
+<p>
+For this assignment I created an interactive “plant identifier” experience using p5.js and the ml5.js image classifier.
+Instead of using a keyboard or mouse, the main interface is my house plants and my body.
+The user simply holds a plant in front of the webcam and the interface responds with plant identity and care tips.
+</p>
+
+
+<h2>1. Concept: Real-world Interface With House Plants</h2>
+
+<p>
+I wanted the computer to “see” my plants and talk back in simple language.
+The main interaction loop is:
+</p>
+
+<ul>
+  <li>User moves a plant into the webcam frame.</li>
+  <li>The trained model predicts which plant it is.</li>
+  <li>The interface shows light, water, and difficulty tips, plus a confidence bar chart.</li>
+</ul>
+
+<p>
+The goal is to make the model feel like a friendly plant coach that lives in my laptop, not just a technical demo.
+</p>
+
+
+<h2>2. Ideation Sketches and Diagrams</h2>
+
+<p>
+Before touching any code or training data, I sketched the interaction on sticky notes.
+On the left note I mapped a simple flow:
+camera → plant → computer “thinking” → plant care output (water, soil, sunlight, level).
+I also drew a few plant shapes to remind myself which plants I wanted to include.
+On the right note I wrote a first list of classes:
+Monstera, Begonia Polka Dot, Rubber Fig, Philodendron Brandi, and Background.
+</p>
+
+<figure>
+  <img src="images/sticky-notes.jpeg" alt="Sticky note sketches showing plant care icons and plant list">
+  <figcaption>Early sticky note sketches of the plant scanner idea and class list.</figcaption>
+</figure>
+
+
+<h2>3. Collecting Training Images</h2>
+
+<p>
+My first idea was to train on a few large plants in different corners of my house.
+I walked around with my laptop and used the webcam to capture examples.
+This worked in Teachable Machine, but later during testing I realized it made the interaction very inconvenient.
+To show a plant to the camera I had to pick up the laptop and move my whole body around the room.
+Even when the model identified the plant correctly, the interaction felt heavy and not playful.
+</p>
+
+<p>
+For the second round I changed the strategy.
+I picked smaller plants that are easy to move:
+a water-rooted heartleaf philodendron, a Begonia Polka Dot cutting, a Rubber Fig, and a Snake Plant.
+They all fit into a clear glass container, so I can hold them up to the webcam while sitting in one place.
+</p>
+
+<p>
+Unfortunately, the Google Teachable Machine training site does not open properly on my iPhone.
+Because of this I could not capture images directly from my phone into the model.
+Instead, I used my phone as a camera only.
+I took many photos from different angles and lighting, then uploaded those images from my laptop into Teachable Machine for each plant class.
+</p>
+
+<figure>
+  <img src="images/tm-classes3.png" alt="Screenshot of Teachable Machine with plant classes">
+  <figcaption>Multiple plants.</figcaption>
+  <img src="images/tm-classes4.png" alt="Screenshot of Teachable Machine with plant classes">
+  <figcaption>Mobile access failed.</figcaption>
+</figure>
+
+
+<h2>4. Finding the Right Number of Classes</h2>
+
+<p>
+At one point I kept adding more and more plant classes.
+It was fun, but the accuracy started to drop.
+I noticed that when I went beyond five plant classes the confidence score spread out a lot.
+The “background” class kept winning and the top prediction became less stable, even when I was holding a clear plant in front of the camera.
+</p>
+
+<p>
+After a few tests I decided to keep only five classes:
+</p>
+
+<ul>
+  <li><strong>snake_plant</strong></li>
+  <li><strong>begonia_polka_dot</strong></li>
+  <li><strong>rubber_fig</strong></li>
+  <li><strong>cordatum</strong> (heartleaf philodendron)</li>
+  <li><strong>background</strong></li>
+</ul>
+
+<p>
+This smaller, more focused set made the live predictions much more confident and readable.
+</p>
+
+
+<h2>5. Training the Model</h2>
+
+<p>
+In Teachable Machine I used the “Image Project → Standard Image Model” option.
+For each class I uploaded many photos from different angles and distances.
+I also added some “background” photos without any plant in the center.
+After training, Teachable Machine gave me a model URL, which I copied into my p5.js sketch.
+</p>
+
+<figure>
+  <img src="images/tm-training3.png" alt="Screenshot of Teachable Machine training interface">
+  <figcaption>Training view in Teachable Machine while adding images for plant classes.</figcaption>
+</figure>
+
+
+<h2>6. Building the Prototype with p5.js and ml5.js</h2>
+
+<p>
+I used the ml5.js example as a base but had to adjust it to match the current API.
+Two key changes:
+</p>
+
+<ul>
+  <li>The callback signature is now <code>gotResult(results, error)</code> instead of <code>gotResult(error, results)</code>.</li>
+  <li>Instead of calling <code>classifier.classify()</code> in a loop, I used <code>classifier.classifyStart(video, gotResult)</code> for continuous classification.</li>
+</ul>
+
+<p>
+In <code>preload()</code> I load the Teachable Machine model:
+</p>
+
+<pre><code>classifier = ml5.imageClassifier(MODEL_URL + "model.json");</code></pre>
+
+<p>
+In <code>setup()</code> I create the canvas and webcam capture, and start the classifier:
+</p>
+
+<ul>
+  <li>Create a 640×520 canvas.</li>
+  <li>Capture video at 640×480 and hide the raw HTML video element.</li>
+  <li>Call <code>classifier.classifyStart(video, gotResult)</code>.</li>
+</ul>
+
+<p>
+The <code>draw()</code> loop shows the webcam on the left and an info panel on the right.
+When <code>gotResult()</code> receives new results, I:
+</p>
+
+<ul>
+  <li>Store the full <code>results</code> array into <code>lastResults</code> for the confidence bars.</li>
+  <li>Pick <code>results[0].label</code> as the main prediction and save it into <code>label</code>.</li>
+</ul>
+
+
+<h2>7. Interface Design: Icons and Confidence Bars</h2>
+
+<p>
+The right panel is designed as a simple “plant card”.
+It includes:
+</p>
+
+<ul>
+  <li>Title: “Plant identifier”.</li>
+  <li>Short instruction: “Hold a plant close to the camera.”</li>
+  <li>Plant name line: for example “Plant: Snake plant”.</li>
+  <li>Three small emoji icons for care tips:
+    <ul>
+      <li>☀️ for light</li>
+      <li>💧 for water</li>
+      <li>⭐ for difficulty</li>
+    </ul>
+  </li>
+  <li>A “Notes” section with one short sentence about the plant’s personality.</li>
+</ul>
+
+<p>
+Below that I added a confidence section.
+For each label in <code>lastResults</code> I draw:
+</p>
+
+<ul>
+  <li>The label name and confidence percentage.</li>
+  <li>A light grey background bar.</li>
+  <li>A filled bar whose width is proportional to the confidence.</li>
+  <li>The top result is highlighted in orange, others in a soft purple.</li>
+</ul>
+
+<figure>
+  <img src="images/confidence-bars.png" alt="Screenshot of interface with plant info panel and confidence bars">
+  <figcaption>Confidence bars UI</figcaption>
+</figure>
+
+
+<h2>8. Final Behavior</h2>
+
+<p>
+When the page loads, the model starts in a “Loading…” state.
+Once the model is ready and the webcam is on, I can hold any of the five trained plants in front of the camera.
+The “Plant” line updates in real time and the care tips switch to match the chosen label.
+The confidence bars move smoothly as I change the distance or angle of the plant.
+When there is no plant in the frame, or when the camera only sees my face and the room, the “background” bar becomes the top result and the interface says “Plant: No plant detected”.
+</p>
+
+
+<h2>9. Reflection and Next Steps</h2>
+
+<p>
+This project taught me how to connect Teachable Machine, ml5.js, and p5.js together in a full loop.
+I also learned that dataset decisions are part of interaction design.
+Training on huge plants forced me to move my whole body around the house and made the interface clumsy.
+Switching to small water-rooted plants turned the experience into something playful and comfortable.
+Reducing the classes down to five made the confidence graph much easier to read and more reliable.
+</p>
+
+<p>
+If I keep working on this project I would like to:
+</p>
+
+<ul>
+  <li>Add more visual feedback like a subtle glow around the top prediction bar.</li>
+  <li>Show a small history of recent predictions so users can see how stable the model is.</li>
+  <li>Connect the plant tips to an external resource link for deeper care guides.</li>
+</ul>
+
+
+<h2>10. Embedded p5.js Sketch</h2>
+
+<p>
+Live prototype (replace the <code>src</code> value with my actual p5.js editor link):
+</p>
+
+<iframe
+  src="https://editor.p5js.org/fyang5-commits/full/rZHB4mC5J"
+  width="900"
+  height="600"
+  loading="lazy"
+  allow="camera; microphone">
+</iframe>
+
+</body>
+</html>
