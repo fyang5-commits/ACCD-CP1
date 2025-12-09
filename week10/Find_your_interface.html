@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Find Your Interface – Lively Plant Scanner</title>
+  <title>Lively Plant Scanner</title>
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -35,11 +35,11 @@
 </head>
 <body>
 
-<h1>Lively Plant Scanner – Find Your Interface</h1>
+<h1>Find Your Interface</h1>
 
 <p>
 For this assignment I created an interactive “plant identifier” experience using p5.js and the ml5.js image classifier.
-Instead of using a keyboard or mouse, the main interface is my house plants and my body.
+Instead of using a keyboard or mouse, the main interface is my house plants.
 The user simply holds a plant in front of the webcam and the interface responds with plant identity and care tips.
 </p>
 
@@ -67,7 +67,7 @@ The goal is to make the model feel like a friendly plant coach that lives in my 
 <p>
 Before touching any code or training data, I sketched the interaction on sticky notes.
 On the left note I mapped a simple flow:
-camera → plant → computer “thinking” → plant care output (water, soil, sunlight, level).
+camera > plant > computer “thinking” > plant care output (water, soil, sunlight, level).
 I also drew a few plant shapes to remind myself which plants I wanted to include.
 On the right note I wrote a first list of classes:
 Monstera, Begonia Polka Dot, Rubber Fig, Philodendron Brandi, and Background.
@@ -140,7 +140,7 @@ This smaller, more focused set made the live predictions much more confident and
 <h2>5. Training the Model</h2>
 
 <p>
-In Teachable Machine I used the “Image Project → Standard Image Model” option.
+In Teachable Machine I used the “Image Project > Standard Image Model” option.
 For each class I uploaded many photos from different angles and distances.
 I also added some “background” photos without any plant in the center.
 After training, Teachable Machine gave me a model URL, which I copied into my p5.js sketch.
@@ -148,7 +148,7 @@ After training, Teachable Machine gave me a model URL, which I copied into my p5
 
 <figure>
   <img src="images/tm-training3.png" alt="Screenshot of Teachable Machine training interface">
-  <figcaption>Training view in Teachable Machine while adding images for plant classes.</figcaption>
+  <figcaption>UI version progress updates.</figcaption>
 </figure>
 
 
@@ -160,8 +160,8 @@ Two key changes:
 </p>
 
 <ul>
-  <li>The callback signature is now <code>gotResult(results, error)</code> instead of <code>gotResult(error, results)</code>.</li>
-  <li>Instead of calling <code>classifier.classify()</code> in a loop, I used <code>classifier.classifyStart(video, gotResult)</code> for continuous classification.</li>
+  <li>The callback signature is now <code>gotResult(results, error)</code> instead of <code>gotResult(error, results)</code>. Rewatching the class demo video, got it fixed.</li>
+  <li>Instead of calling <code>classifier.classify()</code> in a loop, I used <code>classifier.classifyStart(video, gotResult)</code> for continuous classification. Rewatching the class demo video, got it fixed.</li>
 </ul>
 
 <p>
@@ -265,7 +265,7 @@ If I keep working on this project I would like to:
 <h2>10. Embedded p5.js Sketch</h2>
 
 <p>
-Live prototype (replace the <code>src</code> value with my actual p5.js editor link):
+Live prototype 
 </p>
 
 <iframe
