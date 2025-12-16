@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lively Plant Scanner</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 16px;
+    }
+    h1, h2, h3 {
+      margin-top: 1.6em;
+    }
+    figure {
+      margin: 1em 0;
+    }
+    figure img {
+      max-width: 100%;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+    figcaption {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 4px;
+    }
+    iframe {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Refine Your Interface</h1>
+
+<p>
+For this assignment I created an interactive “plant identifier” using p5.js and ml5.js.
+Instead of a keyboard or mouse, the main interface is a real house plant held in front of the webcam.
+The system responds visually and verbally, identifying the plant and showing basic care guidance.
+</p>
+
+<p>
+What started as a simple image classifier gradually evolved into a gesture-based scanning experience,
+where pinching a leaf becomes part of the interaction itself.
+</p>
+
+
+<h2>1. Concept: A Living Interface</h2>
+
+<p>
+I wanted the computer to treat plants as first-class interface elements, not just objects in an image.
+The core idea was to let a physical plant control the system state.
+</p>
+
+<ul>
+  <li>The user places a plant inside a visible scan ring.</li>
+  <li>The model continuously predicts the plant class.</li>
+  <li>A pinch gesture confirms and “locks” the scan.</li>
+  <li>The interface responds with plant name, care tips, and confidence.</li>
+</ul>
+
+<p>
+The goal was not perfect accuracy, but a calm, readable interaction that feels like a conversation with a plant assistant.
+</p>
+
+
+<h2>2. Ideation and Early Interaction Thinking</h2>
+
+<p>
+Before coding, I sketched the interaction as a physical flow rather than a screen flow.
+I was influenced by an instructor comment about using hand gestures to “solve” visual problems,
+and by examples where simple gestures create complex outcomes, such as particle systems forming shapes.
+</p>
+<p>
+This led me to explore pinch as a deliberate action.
+Pinching a leaf feels natural, precise, and intentional.
+It also communicates “focus” to the system without buttons.
+</p>
+
+<figure>
+  <img src="images/concept_sketch.jpeg" alt="Sticky note sketches showing plant care icons and plant list">
+  <figcaption>Early sticky note sketches of the plant scanner idea and class list.</figcaption>
+</figure>
+
+
+<h2>3. Collecting Training Images</h2>
+
+<p>
+My first training attempt focused on large plants placed around my house.
+Technically this worked, but practically it failed.
+To scan a plant I had to move my entire laptop and body around the room.
+The interaction felt heavy and awkward.
+</p>
+
+<p>
+I adjusted the strategy and selected smaller, movable plants:
+</p>
+
+<ul>
+  <li>Rubber fig</li>
+  <li>Snake plant</li>
+  <li>Begonia polka dot</li>
+  <li>Heartleaf philodendron (cordatum)</li>
+</ul>
+<p>
+Each plant was placed in a clear container so it could be easily lifted and brought close to the webcam.
+This single decision dramatically improved the experience.
+</p>
+
+<p>
+Because Teachable Machine did not load correctly on my iPhone, I used my phone only as a camera.
+I captured photos from multiple angles and lighting conditions, then uploaded them manually from my laptop.
+</p>
+
+<figure>
+  <img src="images/tm-classes3.png" alt="Screenshot of Teachable Machine with plant classes">
+  <figcaption>Multiple plants.</figcaption>
+  <img src="images/tm-classes4.png" alt="Screenshot of Teachable Machine with plant classes">
+  <figcaption>Mobile access failed.</figcaption>
+</figure>
+
+
+<h2>4. Managing Classes and Accuracy</h2>
+
+<p>
+As I added more plant classes, the model became less confident.
+The “background” class often overtook real plants, and predictions fluctuated rapidly.
+</p>
+
+<p>
+Through testing I found that five classes was a sweet spot:
+</p>
+
+<ul>
+  <li><strong>snake_plant</strong></li>
+  <li><strong>rubber_fig</strong></li>
+  <li><strong>begonia_polka_dot</strong></li>
+  <li><strong>cordatum</strong></li>
+  <li><strong>background</strong></li>
+</ul>
+
+<p>
+Reducing scope improved stability and made the confidence UI easier to understand.
+This reinforced that model design is also interaction design.
+</p>
+
+
+<h2>5. Building the System (p5.js + ml5.js)</h2>
+
+<p>
+I started from an ml5 image classifier example but had to adapt it heavily.
+Several issues emerged during development:
+</p>
+
+<figure>
+  <img src="images/tm-training3.png" alt="Screenshot of Teachable Machine training interface">
+  <figcaption>UI version progress updates.</figcaption>
+</figure>
+
+<p>
+After extensive debugging, I discovered that simply updating the ml5 script version resolved multiple issues at once.
+Without changing my sketch logic, gesture detection, scanning particles, and classification all began working again.
+This was a strong reminder of how fragile real-time ML systems can be.
+</p>
+
+
+<h2>6. Gesture-Based Scanning</h2>
+
+<p>
+The final interaction uses a pinch gesture to trigger scanning.
+When the hand is detected and the fingers pinch, the system:
+</p>
+
+<ul>
+  <li>Activates animated particles inside the scan ring.</li>
+  <li>Displays “Scanning leaf… keep holding”.</li>
+  <li>Locks the top prediction after a short duration.</li>
+</ul>
+
+<p>
+This turned classification from a passive process into an intentional action.
+Even when accuracy fluctuates, the user feels in control.
+</p>
+
+
+
+<h2>7. Interface Design and Layout Challenges</h2>
+
+<p>
+As the UI grew, I ran into multiple layout issues.
+Text and confidence bars overflowed their containers, especially as labels became longer.
+Instead of constraining content, I redesigned the panels to grow vertically and allow scrolling.
+</p>
+
+<p>
+This matches real-world scenarios where data length is unpredictable.
+The final layout prioritizes clarity over strict fixed sizing.
+</p>
+
+
+<h2>8. Final Behavior</h2>
+
+<p>
+In the final version:
+</p>
+
+<ul>
+  <li>The scan ring stays centered on the video feed.</li>
+  <li>The plant name updates live during scanning.</li>
+  <li>Pinching locks the result and updates care tips.</li>
+  <li>Confidence bars reflect real-time model uncertainty.</li>
+</ul>
+
+<p>
+Even when the model briefly misclassifies, the UI communicates uncertainty clearly instead of hiding it.
+</p>
+
+
+<h2>9. Reflection and Lessons Learned</h2>
+
+<p>
+This project taught me that building an ML interface is as much about debugging and decision-making as coding.
+Small choices, such as plant size or library version, can completely change the experience.
+</p>
+
+<p>
+I also learned to recognize when to stop pushing complexity.
+At one point the system partially broke, and the best decision was to step back,
+stabilize what worked, and document the rest as future exploration.
+</p>
+
+<p>
+Most importantly, I learned that interaction design continues even when things fail.
+Clear feedback, readable states, and graceful degradation matter more than perfect accuracy.
+</p>
+
+
+<h2>10. Next Steps</h2>
+
+<ul>
+  <li>Improve gesture robustness across different lighting conditions.</li>
+  <li>Visualize scan progress more explicitly.</li>
+  <li>Add a short explanation of confidence and uncertainty for users.</li>
+</ul>
+
+<h2>10. Embedded p5.js Sketch</h2>
+
+<p>
+Live prototype 
+</p>
+
+<iframe
+  src="https://editor.p5js.org/fyang5-commits/full/kMXEvEqmm"
+  width="900"
+  height="600"
+  loading="lazy"
+  allow="camera; microphone">
+</iframe>
+
+</body>
+</html>
