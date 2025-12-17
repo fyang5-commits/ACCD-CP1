@@ -21,11 +21,12 @@
       max-width: 100%;
       border-radius: 8px;
       border: 1px solid #ddd;
+      display: block;
     }
     figcaption {
       font-size: 0.9rem;
       color: #555;
-      margin-top: 4px;
+      margin-top: 6px;
     }
     iframe {
       border: 1px solid #ddd;
@@ -38,21 +39,20 @@
 <h1>Refine Your Interface</h1>
 
 <p>
-For this assignment I created an interactive “plant identifier” using p5.js and ml5.js.
+For this assignment, I created an interactive “plant identifier” using p5.js and ml5.js.
 Instead of a keyboard or mouse, the main interface is a real house plant held in front of the webcam.
-The system responds visually and verbally, identifying the plant and showing basic care guidance.
+The system responds visually and verbally by identifying the plant and showing basic care guidance.
 </p>
 
 <p>
-What started as a simple image classifier gradually evolved into a gesture-based scanning experience,
-where pinching a leaf becomes part of the interaction itself.
+What started as a simple image classifier evolved into a gesture-based scanning experience, where pinching a leaf becomes part of the interaction.
 </p>
 
 
 <h2>1. Concept: A Living Interface</h2>
 
 <p>
-I wanted the computer to treat plants as first-class interface elements, not just objects in an image.
+I wanted the computer to treat plants as interface elements, not just objects in an image.
 The core idea was to let a physical plant control the system state.
 </p>
 
@@ -72,9 +72,9 @@ The goal was not perfect accuracy, but a calm, readable interaction that feels l
 
 <p>
 Before coding, I sketched the interaction as a physical flow rather than a screen flow.
-I was influenced by an instructor comment about using hand gestures to “solve” visual problems,
-and by examples where simple gestures create complex outcomes, such as particle systems forming shapes.
+I was influenced by an instructor comment about using hand gestures to solve visual problems, and by examples where simple gestures create strong visual feedback, such as particle systems.
 </p>
+
 <p>
 This led me to explore pinch as a deliberate action.
 Pinching a leaf feels natural, precise, and intentional.
@@ -82,8 +82,8 @@ It also communicates “focus” to the system without buttons.
 </p>
 
 <figure>
-  <img src="images/concept_sketch.jpeg" alt="Sticky note sketches showing plant care icons and plant list">
-  <figcaption>Early sticky note sketches of the plant scanner steps idea.</figcaption>
+  <img src="images/concept_sketch.jpeg" alt="Sticky note sketches showing the step-by-step flow: scan, pinch with particles, and UI result update.">
+  <figcaption><strong>Progress Step 1:</strong> Early sticky note sketch mapping the interaction flow: scan using a ring, pinch to trigger particles, then update the UI result.</figcaption>
 </figure>
 
 
@@ -91,9 +91,7 @@ It also communicates “focus” to the system without buttons.
 
 <p>
 My first training attempt focused on large plants placed around my house.
-Technically this worked, but practically it failed.
-To scan a plant I had to move my entire laptop and body around the room.
-The interaction felt heavy and awkward.
+Technically this worked, but the interaction was awkward because I had to move my laptop and body around the room.
 </p>
 
 <p>
@@ -106,20 +104,36 @@ I adjusted the strategy and selected smaller, movable plants:
   <li>Begonia polka dot</li>
   <li>Heartleaf philodendron (cordatum)</li>
 </ul>
+
 <p>
 Each plant was placed in a clear container so it could be easily lifted and brought close to the webcam.
 This single decision dramatically improved the experience.
 </p>
 
+
+<h2>4. Iteration Timeline (UI + Interaction)</h2>
+
+<p>
+I documented my iterations as a series of UI and interaction upgrades, moving from concept to implementation.
+</p>
+
 <figure>
-  <img src="images/progress_1.png" alt="Screenshot of Teachable Machine with plant classes">
-  <figcaption>UI version progress updates</figcaption>
-  <img src="images/progress_2.png" alt="Screenshot of Teachable Machine with plant classes">
-  <figcaption>UI version progress updates</figcaption>
+  <img src="images/progress_1.png" alt="Before and after UI comparison showing the system moving toward a gesture-based scanning idea.">
+  <figcaption><strong>Progress Step 2:</strong> I added the hand gesture “pitching” concept in the UI to make scanning feel intentional, not passive.</figcaption>
+</figure>
+
+<figure>
+  <img src="images/progress_2.png" alt="Before and after UI comparison showing further UI refinement and clearer layout for results and confidence.">
+  <figcaption><strong>Progress Step 3:</strong> I refined layout and hierarchy so the camera view stays primary, while results and confidence remain readable and structured.</figcaption>
+</figure>
+
+<figure>
+  <img src="images/progress_3.png" alt="Before and after UI comparison showing a ring target and scanning instruction text added to the camera view.">
+  <figcaption><strong>Progress Step 4:</strong> I added the scan ring and clearer instructions so users know where to place the plant and what to do next.</figcaption>
 </figure>
 
 
-<h2>4. Managing Classes and Accuracy</h2>
+<h2>5. Managing Classes and Accuracy</h2>
 
 <p>
 As I added more plant classes, the model became less confident.
@@ -127,7 +141,7 @@ The “background” class often overtook real plants, and predictions fluctuate
 </p>
 
 <p>
-Through testing I found that five classes was a sweet spot:
+Through testing, I found that five classes was a sweet spot:
 </p>
 
 <ul>
@@ -144,29 +158,24 @@ This reinforced that model design is also interaction design.
 </p>
 
 
-<h2>5. Building the System (p5.js + ml5.js)</h2>
+<h2>6. Building the System (p5.js + ml5.js)</h2>
 
 <p>
-I started from an ml5 image classifier example but had to adapt it heavily.
-Several issueszoo emerged during development:
+I started from an ml5 image classifier example, but I adapted it significantly to support live UI updates, gesture-based scanning, and a confidence display.
+Several issues emerged during development, especially around real-time behavior and library stability.
 </p>
 
-<figure>
-  <img src="images/progress_3.png" alt="Screenshot of Teachable Machine training interface">
-  <figcaption>UI version progress updates.</figcaption>
-</figure>
-
 <p>
-After extensive debugging, I discovered that simply updating the ml5 script version resolved multiple issues at once.
-Without changing my sketch logic, gesture detection, scanning particles, and classification all began working again.
-This was a strong reminder of how fragile real-time ML systems can be.
+After debugging, I discovered that updating the ml5 script version resolved multiple issues at once.
+Without changing my sketch logic, gesture detection, scanning particles, and classification began working again.
+This was a strong reminder that real-time ML prototypes can be fragile and version-dependent.
 </p>
 
 
-<h2>6. Gesture-Based Scanning</h2>
+<h2>7. Gesture-Based Scanning</h2>
 
 <p>
-The final interaction uses a pinch gesture to trigger scanning.
+The interaction uses a pinch gesture to trigger scanning.
 When the hand is detected and the fingers pinch, the system:
 </p>
 
@@ -177,30 +186,47 @@ When the hand is detected and the fingers pinch, the system:
 </ul>
 
 <p>
-This turned classification from a passive process into an intentional action.
-Even when accuracy fluctuates, the user feels in control.
+This turns classification from a passive process into an intentional action.
+Even when accuracy fluctuates, the user feels more in control.
 </p>
 
 
-
-<h2>7. Interface Design and Layout Challenges</h2>
+<h2>8. Interface Design and Layout Challenges</h2>
 
 <p>
-As the UI grew, I ran into multiple layout issues.
-Text and confidence bars overflowed their containers, especially as labels became longer.
+As the UI grew, I ran into layout issues.
+Text and confidence bars overflowed their containers, especially when labels were longer.
 Instead of constraining content, I redesigned the panels to grow vertically and allow scrolling.
 </p>
 
 <p>
-This matches real-world scenarios where data length is unpredictable.
+This better matches real-world scenarios where data length is unpredictable.
 The final layout prioritizes clarity over strict fixed sizing.
 </p>
 
 
-<h2>8. Final Behavior</h2>
+<h2>9. Live Demo Challenges</h2>
 
 <p>
-In the final version:
+During the in-class demo, I observed a few issues that impacted reliability and user clarity:
+</p>
+
+<ul>
+  <li><strong>Label did not update when switching plants.</strong> The detected plant name sometimes stayed on the previous result instead of refreshing consistently.</li>
+  <li><strong>Particle effect only triggered once.</strong> After the first trigger, the effect would not retrigger unless the browser page was refreshed.</li>
+  <li><strong>Hand pitch was not working.</strong> The gesture input did not reliably map to the intended interaction during the demo.</li>
+</ul>
+
+<p>
+My instructor also suggested collapsing the bottom hand gesture and system feedback area, since that information is not useful for users to see.
+It is better suited as a hidden debug view.
+</p>
+
+
+<h2>10. Final Behavior (Goal State)</h2>
+
+<p>
+In the final experience, the intended behavior is:
 </p>
 
 <ul>
@@ -211,11 +237,11 @@ In the final version:
 </ul>
 
 <p>
-Even when the model briefly misclassifies, the UI communicates uncertainty clearly instead of hiding it.
+Even when the model briefly misclassifies, the UI should communicate uncertainty clearly instead of hiding it.
 </p>
 
 
-<h2>9. Reflection and Lessons Learned</h2>
+<h2>11. Reflection and Lessons Learned</h2>
 
 <p>
 This project taught me that building an ML interface is as much about debugging and decision-making as coding.
@@ -223,9 +249,8 @@ Small choices, such as plant size or library version, can completely change the 
 </p>
 
 <p>
-I also learned to recognize when to stop pushing complexity.
-At one point the system partially broke, and the best decision was to step back,
-stabilize what worked, and document the rest as future exploration.
+I also learned when to stop pushing complexity.
+When the system became unstable, the best decision was to stabilize the core identification experience, simplify the UI, and document advanced interactions as future exploration.
 </p>
 
 <p>
@@ -234,27 +259,8 @@ Clear feedback, readable states, and graceful degradation matter more than perfe
 </p>
 
 
-<h2>10. Next Steps</h2>
+<h2>12. Next Steps</h2>
 
 <ul>
-  <li>Improve gesture robustness across different lighting conditions.</li>
-  <li>Visualize scan progress more explicitly.</li>
-  <li>Add a short explanation of confidence and uncertainty for users.</li>
-</ul>
-
-<h2>10. Embedded p5.js Sketch</h2>
-
-<p>
-Live prototype 
-</p>
-
-<iframe
-  src="https://editor.p5js.org/fyang5-commits/full/kMXEvEqmm"
-  width="900"
-  height="600"
-  loading="lazy"
-  allow="camera; microphone">
-</iframe>
-
-</body>
-</html>
+  <li><strong>Fix label update reliability:</strong> add confidence thresholds and smoothing so the label updates consistently when switching plants.</li>
+  <li><strong>Make particles retrigger:</strong> refactor the particle trigger logic so it resets cleanly and can fire multiple times without refreshing the page.<
